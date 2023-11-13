@@ -33,9 +33,12 @@ const QUESTIONS = [
 async function main() {
   await showLogo();
 
-  const { filepath, howmany, outputFilepath } = await inquirer.prompt(
+  const { _filepath, howmany, _outputFilepath } = await inquirer.prompt(
     QUESTIONS
   );
+
+  const filepath = serializeFilePath(_filepath);
+  const outputFilepath = serializeFilePath(_outputFilepath);
 
   const files = await readFileAndSerialize(filepath);
   const result = getRandom(files, parseInt(howmany));
@@ -84,12 +87,14 @@ function getRandom(arr, n) {
 }
 
 async function readFileAndSerialize(filepath) {
-  filepath = filepath.replace("~", os.homedir());
-
   const workbook = new ExcelJS.Workbook();
   await workbook.xlsx.readFile(filepath);
   const worksheet = workbook.worksheets[0];
   const rows = worksheet.getRows(1, worksheet.rowCount - 1);
 
   return rows.map((row) => row.getCell(1).value);
+}
+
+function serializeFilePath(filepath) {
+  return filepath.replace("~", os.homedir());
 }
