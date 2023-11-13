@@ -3,12 +3,14 @@
 import fs from "fs";
 import { stringify } from "csv-stringify";
 import inquirer from "inquirer";
+import ExcelJS from "exceljs";
 
 const QUESTIONS = [
   {
     type: "input",
     name: "filepath",
-    message: "랜덤으로 뽑을 파일의 경로를 입력해주세요. \n(예시: ./20명추첨)",
+    message:
+      "랜덤으로 뽑을 파일의 경로를 입력해주세요. \n(예시: ./20명추첨.xlsx)",
     validate: (input) => input.trim().length !== 0,
     transformer: (input) => input.trim(),
   },
@@ -34,7 +36,7 @@ async function main() {
     QUESTIONS
   );
 
-  const files = readFileAndSerialize(filepath);
+  const files = await readFileAndSerialize(filepath);
   const result = getRandom(files, parseInt(howmany));
 
   const serializedResult = result.reduce(
@@ -80,9 +82,11 @@ function getRandom(arr, n) {
   return result;
 }
 
-function readFileAndSerialize(filepath) {
-  return fs
-    .readFileSync(filepath, "utf8")
-    .split("\n")
-    .filter((v) => v !== "");
+async function readFileAndSerialize(filepath) {
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.readFile(filepath);
+  const worksheet = workbook.worksheets[0];
+  const rows = worksheet.getRows(1, worksheet.rowCount - 1);
+
+  return rows.map((row) => row.getCell(1).value);
 }
