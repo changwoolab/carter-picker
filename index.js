@@ -50,7 +50,7 @@ async function main() {
       acc.push([curr]);
       return acc;
     },
-    [["추첨결과"]]
+    [["Results"]]
   );
 
   stringify(serializedResult, (err, output) => {
