@@ -11,7 +11,7 @@ const QUESTIONS = [
     type: "input",
     name: "filepath",
     message:
-      "랜덤으로 뽑을 파일의 경로를 입력해주세요. \n(예시: ./20명추첨.xlsx)",
+      "랜덤으로 뽑을 파일의 이름을 입력해주세요. 반드시 파일은 바탕화면에 존재해야하며, 엑셀파일(xlsx)만 가능합니다. \n(예시: 20명추첨)",
     validate: (input) => input.trim().length !== 0,
     transformer: (input) => input.trim(),
   },
@@ -25,7 +25,8 @@ const QUESTIONS = [
   {
     type: "input",
     name: "outputFilepath",
-    message: "저장될 csv 파일의 이름을 입력해주세요. \n(예시: 20명추첨.csv)",
+    message:
+      "저장될 csv 파일의 이름을 입력해주세요. 파일은 바탕화면에 저장됩니다. \n(예시: 20명추첨결과)",
     transformer: (input) => input.trim(),
   },
 ];
@@ -39,8 +40,8 @@ async function main() {
     outputFilepath: _outputFilepath,
   } = await inquirer.prompt(QUESTIONS);
 
-  const filepath = serializeFilePath(_filepath);
-  const outputFilepath = serializeFilePath(_outputFilepath);
+  const filepath = serializeFilePath(`~/Desktop/${_filepath}.xlsx`);
+  const outputFilepath = serializeFilePath(`~/Desktop/${_outputFilepath}.csv`);
 
   const files = await readFileAndSerialize(filepath);
   const result = getRandom(files, parseInt(howmany));
