@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import fs from "fs";
 import { stringify } from "csv-stringify";
 import inquirer from "inquirer";

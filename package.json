@@ -1,6 +1,6 @@
 {
-  "name": "rararararararararararara",
-  "version": "1.0.0",
+  "name": "carter-picker",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -16,5 +16,8 @@
   },
   "devDependencies": {
     "webpack-cli": "^5.1.4"
+  },
+  "bin": {
+    "carter-picker": "index.js"
   }
 }
