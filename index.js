@@ -57,6 +57,8 @@ async function main() {
     if (err) throw err;
     fs.writeFileSync(outputFilepath, output);
   });
+
+  console.log(`${outputFilepath} 에 저장이 완료되었습니다!`);
 }
 
 main();
