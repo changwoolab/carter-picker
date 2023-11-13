@@ -4,6 +4,7 @@ import fs from "fs";
 import { stringify } from "csv-stringify";
 import inquirer from "inquirer";
 import ExcelJS from "exceljs";
+import os from "os";
 
 const QUESTIONS = [
   {
@@ -83,6 +84,8 @@ function getRandom(arr, n) {
 }
 
 async function readFileAndSerialize(filepath) {
+  filepath = filepath.replace("~", os.homedir());
+
   const workbook = new ExcelJS.Workbook();
   await workbook.xlsx.readFile(filepath);
   const worksheet = workbook.worksheets[0];
