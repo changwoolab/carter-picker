@@ -33,9 +33,11 @@ const QUESTIONS = [
 async function main() {
   await showLogo();
 
-  const { _filepath, howmany, _outputFilepath } = await inquirer.prompt(
-    QUESTIONS
-  );
+  const {
+    filepath: _filepath,
+    howmany,
+    outputFilepath: _outputFilepath,
+  } = await inquirer.prompt(QUESTIONS);
 
   const filepath = serializeFilePath(_filepath);
   const outputFilepath = serializeFilePath(_outputFilepath);
